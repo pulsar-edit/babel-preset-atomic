@@ -1,9 +1,9 @@
 {
-  "name": "babel-preset-atomic",
+  "name": "@pulsar-edit\babel-preset-atomic",
   "version": "5.0.0",
   "description": "babel configuration used in atom-ide-community",
-  "homepage": "https://github.com/atom-ide-community/babel",
-  "repository": "https://github.com/atom-ide-community/babel",
+  "homepage": "https://github.com/pulsar-edit/babel-preset-atomic",
+  "repository": "https://github.com/pulsar-edit/babel-preset-atomic",
   "license": "MIT",
   "author": "Amin Yahyaabadi",
   "main": "./dist/index.js",
