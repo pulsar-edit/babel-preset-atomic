@@ -1,5 +1,5 @@
 {
-  "name": "@pulsar-edit\babel-preset-atomic",
+  "name": "@pulsar-edit/babel-preset-atomic",
   "version": "5.0.0",
   "description": "babel configuration used in atom-ide-community",
   "homepage": "https://github.com/pulsar-edit/babel-preset-atomic",
