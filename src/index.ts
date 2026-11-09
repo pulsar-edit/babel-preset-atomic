@@ -138,7 +138,6 @@ module.exports = (_api: ConfigAPI, options: Options, _dirname: string): Transfor
     require("@babel/plugin-proposal-logical-assignment-operators"),
     [require("@babel/plugin-proposal-optional-chaining"), { loose: false }],
     [require("@babel/plugin-proposal-pipeline-operator"), { proposal: "minimal" }],
-    [require("@babel/plugin-proposal-nullish-coalescing-operator"), { loose: false }],
     require("@babel/plugin-proposal-do-expressions"),
 
     [require("@babel/plugin-proposal-decorators"), { legacy: true }],
