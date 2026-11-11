@@ -135,4 +135,38 @@ describe("Behavior Tests", () => {
 
     assert.strictEqual(result.os.EOL, os.EOL);
   });
+  it("@babel/plugin-proposal-export-namespace-from", () => {
+    const result = execute(`
+      export * as os from "node:os";
+    `);
+
+    const os = require("node:os");
+
+    assert.strictEqual(result.os.EOL, os.EOL);
+  });
+  it("@babel/plugin-proposal-function-bind", () => {
+    const result = execute(`
+      const box = {
+        weight: 2,
+        getWeight() {
+          return this.weight;
+        }
+      };
+      const { getWeight } = box;
+      const bigBox = { weight: 10 };
+      function add(val) {
+        return this + val;
+      }
+
+      module.exports = {
+        simple: box.getWeight(),
+        bind: bigBox::getWeight(),
+        chained: bigBox::getWeight()::add(5)
+      };
+    `);
+
+    assert.strictEqual(result.simple, 2);
+    assert.strictEqual(result.bind, 10);
+    assert.strictEqual(result.chained, 15);
+  });
 });
