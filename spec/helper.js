@@ -40,6 +40,7 @@ function execute(source, options = {}) {
 
   const context = {
     module,
+    require,
     exports: module.exports
   };
 

@@ -126,4 +126,13 @@ describe("Behavior Tests", () => {
 
     assert.strictEqual(result, "small");
   });
+  it("@babel/plugin-proposal-export-default-from", () => {
+    const result = execute(`
+      export os from "node:os";
+    `);
+
+    const os = require("node:os");
+
+    assert.strictEqual(result.os.EOL, os.EOL);
+  });
 });
