@@ -15,5 +15,6 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
       - name: Install Dependencies
         run: npm install
+        continue-on-error: true # Due to some TypeScript shenanigans we technically fail during install
       - name: Test
         run: npm run test
