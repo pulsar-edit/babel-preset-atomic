@@ -111,4 +111,19 @@ describe("Behavior Tests", () => {
     assert.strictEqual(typeof returnNewConstructor.prototype.parent, "function");
     assert.strictEqual(typeof returnNewConstructor.prototype.child, "function");
   });
+  it("@babel/plugin-proposal-do-expressions", () => {
+    const result = execute(`
+      let x = 5;
+      let a = do {
+        if (x > 10) {
+          ("big");
+        } else {
+          ("small");
+        }
+      };
+      module.exports = a;
+    `);
+
+    assert.strictEqual(result, "small");
+  });
 });
