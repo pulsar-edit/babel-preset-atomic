@@ -88,4 +88,61 @@ obj === null || obj === void 0 ? void 0 : (_obj$foo$bar2 = obj.foo.bar) === null
 obj === null || obj === void 0 ? void 0 : (_obj$foo2 = obj["foo"]) === null || _obj$foo2 === void 0 ? void 0 : (_obj$foo2$bar = _obj$foo2.bar) === null || _obj$foo2$bar === void 0 ? void 0 : _obj$foo2$bar.baz; // 42`
     );
   });
+  it("@babel/plugin-proposal-class-properties", () => {
+    // SOURCE: https://babeljs.io/docs/babel-plugin-transform-class-properties
+    const result = compile(
+`
+class Bork {
+  instanceProperty = "bork";
+  boundFunction = () => {
+    return this.instanceProperty;
+  };
+  static staticProperty = "babelIsCool";
+  static staticFunction = function() {
+    return Bork.staticProperty;
+  };
+}`
+    );
+
+    assert.deepEqual(result,
+`"use strict";
+
+var _Bork;
+class Bork {
+  constructor() {
+    this.instanceProperty = "bork";
+    this.boundFunction = () => {
+      return this.instanceProperty;
+    };
+  }
+}
+_Bork = Bork;
+Bork.staticProperty = "babelIsCool";
+Bork.staticFunction = function () {
+  return _Bork.staticProperty;
+};`
+    );
+  });
+  it("@babel/plugin-proposal-decorators", () => {
+    // SOURCE: https://babeljs.io/docs/babel-plugin-proposal-decorators
+    const result = compile(
+`
+@annotation
+class MyClass {}
+
+function annotation(target) {
+  target.annotated = true;
+}`
+    );
+
+    assert.deepEqual(result,
+`"use strict";
+
+var _class;
+let MyClass = annotation(_class = class MyClass {}) || _class;
+function annotation(target) {
+  target.annotated = true;
+}`
+    );
+  });
 });

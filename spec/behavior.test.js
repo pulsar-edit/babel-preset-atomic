@@ -56,4 +56,59 @@ describe("Behavior Tests", () => {
     assert.strictEqual(result.mix, 42);
     assert.strictEqual(result.bracket, 42);
   });
+  it("@babel/plugin-proposal-class-properties", () => {
+    const result = execute(`
+      class Bork {
+        instanceProperty = "bork";
+        boundFunction = () => {
+          return this.instanceProperty;
+        };
+        static staticProperty = "babelIsCool";
+        static staticFunction = function() {
+          return Bork.staticProperty;
+        };
+      }
+      module.exports = Bork;
+    `);
+    let myBork = new result();
+    assert.strictEqual(myBork.__proto__.boundFunction, undefined);
+    assert.strictEqual(myBork.boundFunction.call(undefined), "bork");
+    assert.strictEqual(result.staticFunction(), "babelIsCool");
+  });
+  it("@babel/plugin-proposal-decorators", () => {
+    // We use `legacy` mode on this plugin, so we should test specifically for that
+
+    const mutateExistingConstructor = execute(`
+      function dec(cls) {
+        cls.staticProp = "prop";
+      }
+
+      @dec
+      class Parent {
+        parent() {};
+      }
+
+      module.exports = Parent;
+    `);
+
+    assert.strictEqual(mutateExistingConstructor.staticProp, "prop");
+
+    const returnNewConstructor = execute(`
+      function dec(cls) {
+        return class Child extends cls {
+          child(){}
+        };
+      }
+
+      @dec
+      class Parent {
+        parent(){}
+      }
+
+      module.exports = Parent;
+    `);
+
+    assert.strictEqual(typeof returnNewConstructor.prototype.parent, "function");
+    assert.strictEqual(typeof returnNewConstructor.prototype.child, "function");
+  });
 });
