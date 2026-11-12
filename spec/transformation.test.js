@@ -145,4 +145,21 @@ function annotation(target) {
 }`
     );
   });
+  it("@babel/plugin-syntax-import-meta", () => {
+    const result = compile(
+`
+const moduleURL = import.meta.url;
+export { moduleURL };`
+    );
+
+    assert.deepEqual(result,
+`"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.moduleURL = void 0;
+const moduleURL = exports.moduleURL = import.meta.url;`
+    );
+  });
 });
